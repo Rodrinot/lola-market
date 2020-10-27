@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity(), StylesAdapter.Listener, BeersAdapter.L
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build().create(APIService::class.java)
 
-        mCompositeDisposable?.add(requestInterface.getStyles()
+        mCompositeDisposable?.add(requestInterface.getStyles(API_KEY)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe(this::handleResponse))

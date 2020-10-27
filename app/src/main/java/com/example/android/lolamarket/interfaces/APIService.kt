@@ -10,8 +10,8 @@ import retrofit2.http.Query
  * Describe the request type and the relative URL.
  */
 interface APIService {
-    @GET("styles/?key=a1d4112b073924d9b42aa486ab6b5c2a")
-    fun getStyles() : Observable<Styles>
+    @GET("styles/")
+    fun getStyles(@Query("key") key : String) : Observable<Styles>
 
     @GET("beers/")
     fun getBeers(@Query("styleId") styleId : String, @Query("key") key : String) : Observable<Beers>
