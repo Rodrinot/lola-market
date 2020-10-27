@@ -1,19 +1,20 @@
-package com.example.android.lolamarket
+package com.example.android.lolamarket.adapters
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.android.lolamarket.models.Data
+import com.example.android.lolamarket.R
+import com.example.android.lolamarket.models.Styles
 import kotlinx.android.synthetic.main.style_row_layout.view.*
 
 /**
  * Pass the ArrayList and a listener, and add a variable to hold your data.
  */
-class StylesAdapter (private val stylesList : ArrayList<Data>, private val listener : Listener) :
-    RecyclerView.Adapter<StylesAdapter.ViewHolder>() {
+class StylesAdapter (private val stylesList : ArrayList<Styles.Style>, private val listener : Listener) :
+        RecyclerView.Adapter<StylesAdapter.ViewHolder>() {
     interface Listener {
-        fun onItemClick(style : Data)
+        fun onItemClick(style : Styles.Style)
     }
 
     /**
@@ -39,7 +40,7 @@ class StylesAdapter (private val stylesList : ArrayList<Data>, private val liste
     class ViewHolder(view : View) : RecyclerView.ViewHolder(view) {
 
         // Assign values from the data model to their corresponding Views.
-        fun bind(style: Data, listener: Listener, position: Int) {
+        fun bind(style: Styles.Style, listener: Listener, position: Int) {
             // Listen for user input events.
             itemView.setOnClickListener{ listener.onItemClick(style) }
             itemView.style_name.text = style.id + ".  " + style.name
