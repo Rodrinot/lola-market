@@ -1,30 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/root_layout"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="5dp"
+    app:cardPreventCornerOverlap="true"
+    app:cardUseCompatPadding="true">
 
-    <GridView
-        android:id="@+id/grid_view"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:numColumns="3"
-        android:background="#a8b7ae"
-        android:verticalSpacing="5dp"
-        android:horizontalSpacing="5dp" />
+        android:padding="10dp">
 
-    <TextView
-        android:id="@+id/text_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-        android:textColor="#3e62c7"
-        android:layout_marginTop="20dp"
-        android:padding="15dp"
-        android:background="#ecf8ff" />
+        <ImageView
+            android:id="@+id/beer_icon_image"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/ic_launcher_background" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/beer_name_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/beer_icon_image"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="15dp"
+            android:text="Beer"
+            android:fontFamily="@font/lato_regular" />
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

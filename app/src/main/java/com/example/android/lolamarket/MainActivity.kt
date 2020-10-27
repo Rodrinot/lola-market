@@ -3,6 +3,7 @@ package com.example.android.lolamarket
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.lolamarket.adapters.BeersAdapter
@@ -19,11 +20,12 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.lang.Exception
 
-class MainActivity : AppCompatActivity(), StylesAdapter.Listener, BeersAdapter.Listener {
+class MainActivity : AppCompatActivity(), StylesAdapter.Listener {
 
     private var mStylesAdapter: StylesAdapter? = null
     private var mBeersAdapter: BeersAdapter? = null
     private var mCompositeDisposable: CompositeDisposable? = null
+    private var mGridLayoutManager: GridLayoutManager? = null
     private var mStylesArrayList: ArrayList<Styles.Style>? = null
     private var mBeersArrayList: ArrayList<Beers.Beer>? = null
     private val BASE_URL = "https://sandbox-api.brewerydb.com/v2/"
@@ -42,8 +44,8 @@ class MainActivity : AppCompatActivity(), StylesAdapter.Listener, BeersAdapter.L
      * Initialise the RecyclerView. LayoutManager to position the items to look like a standard ListView.
      */
     private fun initRecyclerView() {
-        val layoutManager : RecyclerView.LayoutManager = LinearLayoutManager(this)
-        list.layoutManager = layoutManager
+        val listLayoutManager = LinearLayoutManager(this)
+        recycler_view.layoutManager = listLayoutManager
     }
 
     /**
@@ -65,7 +67,7 @@ class MainActivity : AppCompatActivity(), StylesAdapter.Listener, BeersAdapter.L
     private fun handleResponse(stylesList: Styles) {
         mStylesArrayList = stylesList.data
         mStylesAdapter = StylesAdapter(mStylesArrayList!!, this)
-        list.adapter = mStylesAdapter
+        recycler_view.adapter = mStylesAdapter
     }
 
     /**
@@ -88,8 +90,12 @@ class MainActivity : AppCompatActivity(), StylesAdapter.Listener, BeersAdapter.L
         try {
             mBeersArrayList = beersList.data
             if (beersList.totalResults > 0) {
-                mBeersAdapter = BeersAdapter(mBeersArrayList!!, this)
-                list.adapter = mBeersAdapter
+                // Change layout from list to grid.
+                val gridLayoutManager = GridLayoutManager(applicationContext, 3, LinearLayoutManager.VERTICAL, false)
+                recycler_view.layoutManager = gridLayoutManager
+                // Change style adapter to beer adapter.
+                mBeersAdapter = BeersAdapter(this, mBeersArrayList!!)
+                recycler_view.adapter = mBeersAdapter
             } else {
                 Toast.makeText(this, "There are no beers of this style. Please, try another one.", Toast.LENGTH_LONG).show()
             }
@@ -103,9 +109,9 @@ class MainActivity : AppCompatActivity(), StylesAdapter.Listener, BeersAdapter.L
         loadBeers(style)
     }
 
-    override fun onItemClick(beer: Beers.Beer) {
+    /*override fun onItemClick(beer: Beers.Beer) {
         Toast.makeText(this, "Displaying ${beer.name} information.", Toast.LENGTH_LONG).show()
-    }
+    }*/
 
     override fun onDestroy() {
         super.onDestroy()

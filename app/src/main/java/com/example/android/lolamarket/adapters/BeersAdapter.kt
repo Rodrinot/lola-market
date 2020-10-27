@@ -1,27 +1,66 @@
 package com.example.android.lolamarket.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.lolamarket.R
 import com.example.android.lolamarket.models.Beers
-import kotlinx.android.synthetic.main.style_row_layout.view.*
+import kotlinx.android.synthetic.main.beers_grid_layout.view.*
+
+class BeersAdapter(var context: Context, var arrayList: ArrayList<Beers.Beer>) :
+        RecyclerView.Adapter<BeersAdapter.ItemHolder>() {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
+        val itemHolder = LayoutInflater.from(parent.context).inflate(R.layout.beers_grid_layout, parent, false)
+        return ItemHolder(itemHolder)
+    }
+
+    override fun onBindViewHolder(holder: ItemHolder, position: Int) {
+        var beer: Beers.Beer = arrayList.get(position)
+
+        holder.icons.setImageResource(R.drawable.ic_launcher_background)
+        holder.names.beer_name_text_view.text = beer.name
+
+        holder.itemView.setOnClickListener {
+            Toast.makeText(context, beer.name, Toast.LENGTH_SHORT).show()
+        }
+
+    }
+
+    override fun getItemCount(): Int {
+        return arrayList.size
+    }
+
+    class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var icons = itemView.beer_icon_image
+        var names = itemView.beer_name_text_view
+
+    }
+
+}
+
+
+
+/*
 
 /**
  * Pass the ArrayList and a listener, and add a variable to hold your data.
  */
-class BeersAdapter (private val beersList : ArrayList<Beers.Beer>, private val listener : Listener) :
+class BeersAdapter(private val beersList: ArrayList<Beers.Beer>, private val listener: Listener) :
         RecyclerView.Adapter<BeersAdapter.ViewHolder>() {
     interface Listener {
-        fun onItemClick(beer : Beers.Beer)
+        fun onItemClick(beer: Beers.Beer)
     }
 
     /**
      * Bind the ViewHolder. Pass the position where each item should be displayed.
      */
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(beersList[position], listener, position)
+        holder.bind(beersList, listener, position)
     }
 
     /**
@@ -29,7 +68,7 @@ class BeersAdapter (private val beersList : ArrayList<Beers.Beer>, private val l
      */
     override fun getItemCount(): Int = beersList.count()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.style_row_layout, parent,
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.beers_grid_layout, parent,
                 false)
         return ViewHolder(view)
     }
@@ -37,15 +76,22 @@ class BeersAdapter (private val beersList : ArrayList<Beers.Beer>, private val l
     /**
      * ViewHolder class for RecyclerView items.
      */
-    class ViewHolder(view : View) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         // Assign values from the data model to their corresponding Views.
-        fun bind(beer: Beers.Beer, listener: Listener, position: Int) {
-            // Listen for user input events.
-            itemView.setOnClickListener{ listener.onItemClick(beer) }
-            itemView.style_name.text = beer.name
+        fun bind(beers: ArrayList<Beers.Beer>, listener: Listener, position: Int) {
+            try {
+                // Listen for user input events.
+                itemView.setOnClickListener{ listener.onItemClick(beers[position]) }
+                itemView.beerName.text = "Heineken"
+                //itemView.grid_view[0] = beer
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
 
     }
 
 }
+
+*/
