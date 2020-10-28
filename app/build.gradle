@@ -33,6 +33,11 @@ android {
     }
 }
 
+ext.retrofit_version = '2.3.0'
+ext.support_version = '26.1.0'
+ext.picasso_version = '2.71828'
+ext.rxjava_version = '2.0.2'
+
 dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -43,15 +48,15 @@ dependencies {
 
     // RecyclerView
     // noinspection GradleCompatible
-    implementation 'com.android.support:recyclerview-v7:26.1.0'
+    implementation "com.android.support:recyclerview-v7:$support_version"
     // GSon
-    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
     // Retrofit adapter for RxJava
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
     // RxAndroid
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+    implementation "io.reactivex.rxjava2:rxandroid:$rxjava_version"
     // Picasso
-    //implementation 'co.roverlabs:picasso:2.5.2'
+    implementation "com.squareup.picasso:picasso:$picasso_version"
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

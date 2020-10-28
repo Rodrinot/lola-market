@@ -9,7 +9,9 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.lolamarket.R
 import com.example.android.lolamarket.models.Beers
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.beers_grid_layout.view.*
+import java.lang.Exception
 
 class BeersAdapter(var context: Context, var arrayList: ArrayList<Beers.Beer>) :
         RecyclerView.Adapter<BeersAdapter.ItemHolder>() {
@@ -20,15 +22,18 @@ class BeersAdapter(var context: Context, var arrayList: ArrayList<Beers.Beer>) :
     }
 
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
-        var beer: Beers.Beer = arrayList.get(position)
+        try {
+            var beer: Beers.Beer = arrayList.get(position)
 
-        holder.icons.setImageResource(R.drawable.ic_launcher_background)
-        holder.names.beer_name_text_view.text = beer.name
+            holder.names.beer_name_text_view.text = beer.name
+            holder.icons.fromUrl(beer.labels.icon)
 
-        holder.itemView.setOnClickListener {
-            Toast.makeText(context, beer.name, Toast.LENGTH_SHORT).show()
+            holder.itemView.setOnClickListener {
+                Toast.makeText(context, beer.name, Toast.LENGTH_SHORT).show()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
-
     }
 
     override fun getItemCount(): Int {
@@ -38,12 +43,17 @@ class BeersAdapter(var context: Context, var arrayList: ArrayList<Beers.Beer>) :
     class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var icons = itemView.beer_icon_image
         var names = itemView.beer_name_text_view
-
     }
 
 }
 
-
+private fun ImageView.fromUrl(url: String) {
+    try {
+        Picasso.get().load(url).into(this)
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
+}
 
 /*
 
